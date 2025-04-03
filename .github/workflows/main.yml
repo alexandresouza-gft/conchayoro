@@ -39,3 +39,4 @@ jobs:
       - run: ls -la
 
       - run: aws s3 cp index.html "s3://$BUCKET_S3/index.html" --acl public-read
+
