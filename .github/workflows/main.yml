@@ -12,14 +12,34 @@ jobs:
 
       - run: sudo apt-get update && sudo apt-get install -y pandoc
 
-      - run: pandoc README.md -f markdown -t html -s -o index.html
+      # - run: pandoc README.md -f markdown -t html -s -o index.html
+      - name: Cria index.html personalizado
+        run: |
+          cat <<EOF > index.html
+          <!DOCTYPE html>
+          <html lang="pt-BR">
+          <head>
+              <meta charset="UTF-8">
+              <title>Bem-vindo ao Meu Site!</title>
+              <style>
+                body { font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 40px; }
+                h1 { color: #2c3e50; }
+              </style>
+          </head>
+          <body>
+              <h1>Deploy via GitHub Actions para S3 funcionando! 🚀</h1>
+              <p>Este arquivo foi gerado automaticamente e enviado para o bucket <strong>${{ secrets.BUCKET_S3 }}</strong>.</p>
+              <p><em>Última atualização: $(date)</em></p>
+          </body>
+          </html>
+          EOF
 
-      - run: ls -la
+            - run: ls -la
 
-      - uses: actions/upload-artifact@v4
-        with:
-          name: site
-          path: index.html
+            - uses: actions/upload-artifact@v4
+              with:
+                name: site
+                path: index.html
 
   deploy:
     runs-on: ubuntu-latest
