@@ -10,9 +10,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - run: sudo apt-get update && sudo apt-get install -y pandoc
-
-      # - run: pandoc README.md -f markdown -t html -s -o index.html
       - name: Cria index.html personalizado
         run: |
           cat <<EOF > index.html
@@ -34,12 +31,12 @@ jobs:
           </html>
           EOF
 
-            - run: ls -la
+      - run: ls -la
 
-            - uses: actions/upload-artifact@v4
-              with:
-                name: site
-                path: index.html
+      - uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: index.html
 
   deploy:
     runs-on: ubuntu-latest
@@ -62,4 +59,3 @@ jobs:
       - run: aws sts get-caller-identity
 
       - run: aws s3 cp index.html "s3://$BUCKET_S3/index.html" --acl public-read
-
