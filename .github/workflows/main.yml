@@ -97,5 +97,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install awsebcli
 
+      - name: Configurar AWS CLI no deploy
+        run: |
+          aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+          aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+          aws configure set region $AWS_REGION
+          aws sts get-caller-identity
+
       - name: Fazer deploy com EB CLI
         run: eb deploy --verbose
