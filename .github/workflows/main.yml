@@ -5,36 +5,29 @@ on:
     branches: [ main ]
   #workflow_dispatch
 
-env:
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
-  AWS_REGION: ${{ vars.AWS_REGION }}
-  PROJECT_NAME: ${{ vars.PROJECT_NAME }}
-  MODULE_NAME: ${{ vars.MODULE_NAME }}
-  TAG: ${{ vars.TAG }}
-  STACK_NAME: ${{ vars.STACK_NAME }}
+# env:
+#   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#   AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+#   AWS_REGION: ${{ secrets.AWS_REGION }}
+#   PROJECT_NAME: ${{ secrets.PROJECT_NAME }}
+#   MODULE_NAME: ${{ secrets.MODULE_NAME }}
+#   TAG: ${{ secrets.TAG }}
+#   STACK_NAME: ${{ secrets.STACK_NAME }}
   
 jobs:
   build:
     runs-on: ubuntu-latest
     environment: Puc
     env:
-      MODULE_FULLNAME: ${{ vars.PROJECT_NAME }}/${{ vars.MODULE_NAME }}
-      REGISTRY_URL: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ vars.AWS_REGION }}.amazonaws.com
+      MODULE_FULLNAME: ${{ secrets.PROJECT_NAME }}/${{ secrets.MODULE_NAME }}
+      REGISTRY_URL: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
       with:
         node-version: '18'
         cache: 'npm'
-    - name: Verificar variáveis
-      run: |
-        echo "PROJECT_NAME: $PROJECT_NAME"
-        echo "MODULE_NAME: $MODULE_NAME"
-        echo "TAG: $TAG"
-        echo "AWS_REGION: $AWS_REGION"
-        echo "MODULE_FULLNAME: $MODULE_FULLNAME"
     - run: cd frontend
     - run: docker build -t "$MODULE_FULLNAME:$MODULE_NAME" .
     - run: |
