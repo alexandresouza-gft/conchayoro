@@ -58,45 +58,4 @@ jobs:
             frontend/.elasticbeanstalk/config.yml
             frontend/Dockerrun.aws.json
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    env:
-      AWS_REGION: ${{ secrets.AWS_REGION }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
-      PROJECT_NAME: ${{ secrets.PROJECT_NAME }}
-      MODULE_NAME: ${{ secrets.MODULE_NAME }}
-      TAG: latest
-      AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
-    steps:
-      - uses: actions/download-artifact@v4
-        with:
-          name: ebconfig
-          path: .
-
-      - name: Substituir variáveis no Dockerrun.aws.json
-        run: |
-          sed -i "s/<AWS_ACCOUNT_ID>/$AWS_ACCOUNT_ID/" Dockerrun.aws.json
-          sed -i "s/<PROJECT_NAME>/$PROJECT_NAME/" Dockerrun.aws.json
-          sed -i "s/<MODULE_NAME>/$MODULE_NAME/" Dockerrun.aws.json
-          sed -i "s/<TAG>/$TAG/" Dockerrun.aws.json
-
-      - uses: actions/setup-python@v3
-        with:
-          python-version: '3.10'
-
-      - name: Instalar pip e awsebcli (com pyyaml < 5.4)
-        run: |
-          sudo wget https://bootstrap.pypa.io/get-pip.py
-          sudo python3 get-pip.py
-          sudo pip install "pyyaml<5.4"
-          sudo pip install --upgrade setuptools
-          sudo pip install --upgrade pip awsebcli
-
-      - name: Deploy no Elastic Beanstalk
-        run: eb deploy --verbose
-
-
     
