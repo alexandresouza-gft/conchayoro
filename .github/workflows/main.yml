@@ -28,6 +28,13 @@ jobs:
       with:
         node-version: '18'
         cache: 'npm'
+    - name: Verificar variáveis
+      run: |
+        echo "PROJECT_NAME: $PROJECT_NAME"
+        echo "MODULE_NAME: $MODULE_NAME"
+        echo "TAG: $TAG"
+        echo "AWS_REGION: $AWS_REGION"
+        echo "MODULE_FULLNAME: $MODULE_FULLNAME"
     - run: cd frontend
     - run: docker build -t "$MODULE_FULLNAME:$MODULE_NAME" .
     - run: |
