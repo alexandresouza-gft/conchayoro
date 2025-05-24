@@ -1,5 +1,12 @@
 import {
-  Controller, Get, Post, Body, Put, Param, Delete,
+  Controller,
+  Get,
+  Post,
+  Body,
+  Put,
+  Param,
+  Delete,
+  HttpCode,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -34,11 +41,12 @@ export class ProductsController {
   }
 
   @Delete(':id')
+  @HttpCode(204) // ✔️ Aqui está a correção para o status No Content
   remove(@Param('id') id: string): Promise<void> {
     return this.productsService.remove(id);
   }
 
-  /** 🔥 Método adicionado conforme solicitado */
+  /** 🔍 Método de busca por critérios */
   @Get('search/by-criteria')
   findByCriteria(@Body() criteria: any): Promise<Product[]> {
     return this.productsService.findByCriteria(criteria);
