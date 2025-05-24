@@ -39,4 +39,11 @@ export class ProductsService {
     const product = await this.findOne(id);
     await product.destroy();
   }
+
+  /** 🔍 Método adicionado conforme solicitado */
+  async findByCriteria(criteria: any): Promise<Product[]> {
+    return await this.productModel.findAll({
+      where: criteria,
+    });
+  }
 }

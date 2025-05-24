@@ -97,4 +97,18 @@ describe('ProductsController', () => {
 
     expect(result).toBe(mockedResponseData);
   });
+
+  /** ⬇️ Trecho novo, conforme imagem (teste do findByCriteria) ⬇️ **/
+  it('should return an array of products by criteria', async () => {
+    const mockedResponseData = [];
+    const criteria = { id: '1' };
+
+    jest
+      .spyOn(productsService, 'findByCriteria')
+      .mockResolvedValue(mockedResponseData);
+
+    const result = await productsController.findByCriteria(criteria);
+
+    expect(result).toBe(mockedResponseData);
+  });
 });
