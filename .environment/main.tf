@@ -15,7 +15,7 @@ resource "aws_elastic_beanstalk_application" "cyo_eba" {
 resource "aws_elastic_beanstalk_environment" "cyo_ebef" {
   name                = "${var.MODULE_NAME}"
   application         = aws_elastic_beanstalk_application.cyo_eba.name
-  solution_stack_name = "64bit Amazon Linux 2023 v4.5.1 running Docker"
+  solution_stack_name = "64bit Amazon Linux 2023 v4.5.2 running Docker"
 
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
@@ -38,13 +38,13 @@ resource "aws_elastic_beanstalk_environment" "cyo_ebef" {
   setting {
     namespace = "aws:elasticbeanstalk:environment"
     name      = "ServiceRole"
-    value     = "LabRole"
+    value     = "aws-elasticbeanstalk-service-role"
   }
   
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name      = "IamInstanceProfile"
-    value     = "LabInstanceProfile"
+    value     = "aws-elasticbeanstalk-ec2-role"
   }
 
   setting {
