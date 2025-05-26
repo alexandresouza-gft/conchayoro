@@ -50,7 +50,7 @@ resource "aws_elastic_beanstalk_environment" "cyo_ebef" {
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name      = "EC2KeyName"
-    value     = "vockey"
+    value     = "gopay-bastion"
   }
 
   setting {
