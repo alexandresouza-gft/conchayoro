@@ -1,3 +1,5 @@
+name: deploy_beanstalk
+
 on:
   workflow_dispatch
 
