@@ -16,6 +16,7 @@ env:
 jobs:
   destroy:
     runs-on: ubuntu-latest
+    environment: Puc
     env:
       TF_VAR_AWS_REGION: ${{ vars.AWS_REGION }}
       TF_VAR_PROJECT_NAME: ${{ vars.PROJECT_NAME }}
