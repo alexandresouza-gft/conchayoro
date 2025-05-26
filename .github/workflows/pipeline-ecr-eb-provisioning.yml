@@ -8,7 +8,7 @@ env:
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
   AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
-  AWS_REGION: ${{ vars.AWS_REGION }}
+  AWS_REGION: ${{ secrets.AWS_REGION }}
   PROJECT_NAME: ${{ vars.PROJECT_NAME }}
   MODULE_NAME: ${{ vars.MODULE_NAME }}
 
@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: Puc
     env:
-      TF_VAR_AWS_REGION: ${{ vars.AWS_REGION }}
+      TF_VAR_AWS_REGION: ${{ secrets.AWS_REGION }}
       TF_VAR_PROJECT_NAME: ${{ vars.PROJECT_NAME }}
       TF_VAR_MODULE_NAME: ${{ vars.MODULE_NAME }}
       TF_VAR_SOLUTION_STACK_NAME: ${{ vars.STACK_NAME }}
